@@ -22,7 +22,6 @@ class ResetPasswordService {
     }
 
     const user = await usersRepository.findById(userToken.user_id);
-
     if (!user) {
       throw new AppError('User does not exists');
     }
@@ -36,6 +35,8 @@ class ResetPasswordService {
     }
 
     user.password = await hash(password, 8);
+
+    await usersRepository.save(user);
   }
 }
 
